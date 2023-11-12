@@ -1,13 +1,20 @@
 const Task = require("../models/task.model");
 const paginationHelper = require('../../../helper/pagination.js')
+const searchHelper = require("../../../helper/search.js");
 // [GET] /api/v1/tasks
 module.exports.index = async (req, res) => {
+    let objectSearch = searchHelper(req.query);
     const find = {
         deleted: false
     }
     if (req.query.status) {
         find.status = req.query.status
     }
+
+    if (req.query.keyword) {
+        find.title = objectSearch.regex;
+    }
+
     // Pagination
     let initPagination = {
         currentPage: 1,
@@ -16,6 +23,7 @@ module.exports.index = async (req, res) => {
 
     const countTask = await Task.countDocuments(find);
     const objectPagination = paginationHelper(initPagination, req.query, countTask);
+
     // Sort
     const sort = {};
 
