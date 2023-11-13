@@ -9,5 +9,7 @@ router.get("/detail/:id", controller.detail);
 
 router.patch("/change-status/:id", controller.changeStatus);
 
+router.patch("/change-Multi", controller.changeMulti);
+
 
 module.exports = router;
