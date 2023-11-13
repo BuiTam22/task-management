@@ -42,7 +42,7 @@ module.exports.index = async (req, res) => {
 };
 
 
-// [GET] /api/v1/task/detail/:id
+// [GET] /api/v1/tasks/detail/:id
 module.exports.detail = async (req, res) => {
     try {
         const id = req.params.id;
@@ -59,7 +59,7 @@ module.exports.detail = async (req, res) => {
 };
 
 
-// [PATCH] /api/v1/task/change-status/:id
+// [PATCH] /api/v1/tasks/change-status/:id
 module.exports.changeStatus = async (req, res) =>{
     try {
         const id = req.params.id;
@@ -87,7 +87,7 @@ module.exports.changeStatus = async (req, res) =>{
 }
 
 
-// [PATCH] /api/v1/task/change-multi
+// [PATCH] /api/v1/tasks/change-multi
 module.exports.changeMulti = async (req, res) =>{
     try {
         const {ids, key, value} = req.body;''
@@ -121,4 +121,26 @@ module.exports.changeMulti = async (req, res) =>{
         });
     }
     
+}
+
+
+// [POST] /api/v1/tasks/create
+module.exports.create = async (req, res) =>{
+    try {
+       const task = new Task(req.body);
+       const data = await task.save();
+       
+        res.json({
+        // xác nhận thành công
+        code: 200,
+        message: "Cập nhật trạng thái thành công",
+        data: data
+        });
+    } catch (error) {
+        res.json({
+            // xác nhận thất bại
+            code: 400,
+            message: "không tồn tại"
+        });
+    }
 }
