@@ -130,11 +130,33 @@ module.exports.create = async (req, res) =>{
        const task = new Task(req.body);
        const data = await task.save();
        
+    res.json({
+    // xác nhận thành công
+    code: 200,
+    message: "Cập nhật trạng thái thành công",
+    data: data
+    });
+    } catch (error) {
         res.json({
-        // xác nhận thành công
-        code: 200,
-        message: "Cập nhật trạng thái thành công",
-        data: data
+            // xác nhận thất bại
+            code: 400,
+            message: "không tồn tại"
+        });
+    }
+}
+
+
+// [POST] /api/v1/tasks/edit/:id
+module.exports.edit = async (req, res) =>{
+    try {
+        const id = req.params.id;
+
+        await Task.updateOne({_id: id}, req.body);
+
+        res.json({
+            // xác nhận thành công
+            code: 200,
+            message: "Cập nhật trạng thái thành công"
         });
     } catch (error) {
         res.json({
