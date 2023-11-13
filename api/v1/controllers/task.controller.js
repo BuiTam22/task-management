@@ -166,3 +166,28 @@ module.exports.edit = async (req, res) =>{
         });
     }
 }
+
+
+// [POST] /api/v1/tasks/edit/:id
+module.exports.delete = async (req, res) =>{
+    try {
+        const id = req.params.id;
+
+        await Task.updateOne({_id: id},{
+            deleted: true,
+            deleteAt: new Date()
+        });
+
+        res.json({
+            // xác nhận thành công
+            code: 200,
+            message: "Xóa thành công"
+        });
+    } catch (error) {
+        res.json({
+            // xác nhận thất bại
+            code: 400,
+            message: "không tồn tại"
+        });
+    }
+}
