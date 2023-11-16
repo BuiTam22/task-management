@@ -185,3 +185,24 @@ module.exports.resetPassword = async (req, res) =>{
     message: "Đổi mật khẩu thành công!"
   });
 };
+
+
+// [GET] /api/v1/users/detail
+module.exports.detail = async(req, res) =>{
+  const token = req.body.token;
+  const user = await User.findOne({token: token},
+    {deleted:false}
+    ).select("-password -token");
+  if(user){
+    res.json({
+      code: 200,
+      message: "thành công",
+      info: user
+    });
+  } else{
+    res.json({
+      code: 400,
+      message: "không tồn tại"
+    });
+  }
+}
