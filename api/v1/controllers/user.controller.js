@@ -198,7 +198,7 @@ module.exports.detail = async(req, res) =>{
     res.json({
       code: 200,
       message: "thành công",
-      info: user
+      info: req.user
     });
   } else{
     res.json({
