@@ -5,6 +5,10 @@ const searchHelper = require("../../../helper/search.js");
 module.exports.index = async (req, res) => {
     let objectSearch = searchHelper(req.query);
     const find = {
+        $or: [
+            { createBy: req.user.id },
+            { listUser: req.user.id }
+        ],
         deleted: false
     }
     if (req.query.status) {
